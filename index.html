@@ -58,6 +58,14 @@
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
+                padding: 4px 8px;
+                cursor: pointer;
+                transition: background-color 0.2s;
+            }
+
+            label:hover {
+                background-color: #e0f0ff; /* or any color you like */
+                border-radius: 4px;
             }
 
             .button-container {
@@ -91,10 +99,13 @@
         <script>
             const clearMessage = "Clear";
             const checkMessage = "Check";
-            const allOptions = [placeholder2];
-            const precheckedValues = [placeholder];
-            // const allOptions = ["test", "hi.fsdfshdsfhdfhdfshfdshsdfbsdfhgbfdgbjkbfgsjkdfjkgjkldfgjklnsdfjl"];
-            // const precheckedValues = ["hi", "test"];
+            // const allOptions = [placeholder2];
+            // const precheckedValues = [placeholder];
+            const allOptions = [
+                "test",
+                "hi.fsdfshdsfhdfhdfshfdshsdfbsdfhgbfdgbjkbfgsjkdfjkgjkldfgjklnsdfjl",
+            ];
+            const precheckedValues = ["hi", "test"];
 
             const listParent = document.querySelector("form");
             listParent.innerHTML = "";
