@@ -101,10 +101,21 @@
         <script>
             const clearMessage = "Clear";
             const checkMessage = "Check";
-            const allOptions = [placeholder2];
-            const precheckedValues = [placeholder];
-            // const allOptions = ["test", "hi"];
-            // const precheckedValues = ["hi", "test"];
+            // const allOptions = [placeholder2];
+            // const precheckedValues = [placeholder];
+            const allOptions = ["test", "hi"];
+            const precheckedValues = ["hi", "test"];
+
+            function updateTitle() {
+                const count = document.querySelectorAll(
+                    "form input[type='checkbox']:checked"
+                ).length;
+                const title = document.querySelector(".title");
+                title.textContent =
+                    count === 0
+                        ? "No filters selected"
+                        : `${count} filters selected`;
+            }
 
             const listParent = document.querySelector("form");
             listParent.innerHTML = "";
@@ -126,6 +137,7 @@
 
                 newOption.insertBefore(newInput, newOption.firstChild);
                 listParent.appendChild(newOption);
+                updateTitle();
             }
 
             function areAllChecked() {
@@ -158,6 +170,8 @@
                 toggleAllButton.textContent = allChecked
                     ? clearMessage
                     : checkMessage;
+
+                updateTitle();
             });
 
             const findButton = document.getElementById("findButton");
@@ -193,6 +207,12 @@
                 .getElementById("closeButton")
                 .addEventListener("click", () => {
                     window.FileMaker.PerformScript("[placeholder4]", "close");
+                });
+
+            document
+                .querySelectorAll("form input[type='checkbox']")
+                .forEach((checkbox) => {
+                    checkbox.addEventListener("change", updateTitle);
                 });
         </script>
     </body>
