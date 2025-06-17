@@ -189,7 +189,19 @@
                         }
                     });
 
-                const resultList = checkedValues.join("\r");
+                let columnNumber = [placeholder5];
+                let targetField = "[placeholder6]";
+
+                let resultList;
+                if (columnNumber && targetField) {
+                    resultList = [
+                        columnNumber,
+                        targetField,
+                        ...checkedValues,
+                    ].join("\r");
+                } else {
+                    resultList = checkedValues.join("\r");
+                }
 
                 window.FileMaker.PerformScript("[placeholder3]", resultList);
             });
