@@ -102,6 +102,7 @@
             const clearMessage = "Clear";
             const checkMessage = "Check";
             let allOptions = [placeholder2];
+            allOptions.unshift("Blank fields");
             allOptions = allOptions.filter((option) => option.trim() !== "");
             const precheckedValues = [placeholder];
             // const allOptions = ["test", "hi"];
@@ -196,8 +197,8 @@
                     });
 
                 let columnNumber = [placeholder5];
-
                 let resultList;
+
                 if (columnNumber) {
                     resultList = [columnNumber, ...checkedValues].join("\r");
                 } else {
@@ -222,11 +223,11 @@
                     window.FileMaker.PerformScript("[placeholder4]", "close");
                 });
 
-            document
-                .querySelectorAll("form input[type='checkbox']")
-                .forEach((checkbox) => {
-                    checkbox.addEventListener("change", updateTitle);
-                });
+            // document
+            //     .querySelectorAll("form input[type='checkbox']")
+            //     .forEach((checkbox) => {
+            //         checkbox.addEventListener("change", updateTitle);
+            //     });
         </script>
     </body>
 </html>
