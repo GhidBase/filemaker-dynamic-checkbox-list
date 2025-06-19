@@ -101,10 +101,11 @@
         <script>
             const clearMessage = "Clear";
             const checkMessage = "Check";
-            const allOptions = [placeholder2];
-            const precheckedValues = [placeholder];
-            // const allOptions = ["test", "hi"];
-            // const precheckedValues = ["hi", "test"];
+            // let allOptions = [placeholder2];
+            // allOptions = allOptions.filter((option) => option.trim() !== "");
+            // const precheckedValues = [placeholder];
+            const allOptions = ["test", "hi"];
+            const precheckedValues = ["hi", "test"];
 
             function updateTitle() {
                 const count = document.querySelectorAll(
@@ -137,19 +138,20 @@
 
                 newOption.insertBefore(newInput, newOption.firstChild);
                 listParent.appendChild(newOption);
-                updateTitle();
+
+                newInput.addEventListener("click", () => {
+                    updateTitle();
+                    toggleAllButton.textContent = areAnyChecked()
+                        ? clearMessage
+                        : checkMessage;
+                });
+                // updateTitle();
             }
 
-            function areAllChecked() {
-                const checkboxes = document.querySelectorAll(
-                    "form input[type='checkbox']"
-                );
-                for (const checkbox of checkboxes) {
-                    if (!checkbox.checked) {
-                        return false;
-                    }
-                }
-                return true;
+            function areAnyChecked() {
+                return Array.from(
+                    document.querySelectorAll("form input[type='checkbox']")
+                ).some((checkbox) => checkbox.checked);
             }
 
             allOptions.forEach((element, index) => {
@@ -157,19 +159,23 @@
             });
 
             let allChecked = false;
+            let anyChecked = false;
 
             const toggleAllButton = document.getElementById("toggleAllButton");
             toggleAllButton.addEventListener("click", () => {
                 const checkboxes = document.querySelectorAll(
                     "form input[type='checkbox']"
                 );
+                anyChecked = areAnyChecked();
                 checkboxes.forEach((checkbox) => {
-                    checkbox.checked = !allChecked;
+                    checkbox.checked = !anyChecked;
                 });
-                allChecked = !allChecked;
-                toggleAllButton.textContent = allChecked
+                anyChecked = !areAnyChecked();
+                toggleAllButton.textContent = !anyChecked
                     ? clearMessage
                     : checkMessage;
+
+                console.log(areAnyChecked());
 
                 updateTitle();
             });
@@ -193,10 +199,7 @@
 
                 let resultList;
                 if (columnNumber) {
-                    resultList = [
-                        columnNumber,
-                        ...checkedValues,
-                    ].join("\r");
+                    resultList = [columnNumber, ...checkedValues].join("\r");
                 } else {
                     resultList = checkedValues.join("\r");
                 }
@@ -206,7 +209,7 @@
 
             // If when the tool is opened, all the items are checked
             //
-            if (areAllChecked()) {
+            if (areAnyChecked()) {
                 const toggleAllButton =
                     document.getElementById("toggleAllButton");
                 toggleAllButton.textContent = clearMessage;
